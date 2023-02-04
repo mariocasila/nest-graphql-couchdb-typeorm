@@ -1,0 +1,106 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateNewsInput {
+  audience: TargetingAudienceInput
+  body: String!
+  images: [NewsImageInput!]
+  link: String
+  locations: [TargetingLocationInput!]
+  status: String!
+  summary: String
+  title: String!
+  type: String!
+}
+
+input FindNewsArgs {
+  page: Int! = 0
+  pageSize: Int! = 10
+}
+
+type Mutation {
+  createNews(createNewsInput: CreateNewsInput!): News!
+  removeNews(id: String!): News!
+  updateNews(updateNewsInput: UpdateNewsInput!): News!
+}
+
+type News {
+  audience: TargetingAudience
+  body: String!
+
+  """ID"""
+  id: String!
+  images: [NewsImage!]
+  link: String
+  locations: [TargetingLocation!]
+  status: String!
+  summary: String
+  title: String!
+  type: String!
+}
+
+type NewsImage {
+  size: [Float!]!
+  url: String!
+}
+
+input NewsImageInput {
+  size: [Float!]!
+  url: String!
+}
+
+type PaginatedNews {
+  data: [News!]
+  total: Int!
+}
+
+type Query {
+  news(options: FindNewsArgs!): PaginatedNews!
+  news_one_by_id(id: String!): News!
+}
+
+type TargetingAudience {
+  gender: String!
+  user_levels: [String!]!
+}
+
+input TargetingAudienceInput {
+  gender: String!
+  user_levels: [String!]!
+}
+
+type TargetingLocation {
+  active: Boolean!
+  cities: [String!]!
+  country: String!
+  distance: Float!
+  postcodes: [String!]!
+  retailers: [String!]!
+  states: [String!]!
+}
+
+input TargetingLocationInput {
+  active: Boolean!
+  cities: [String!]!
+  country: String!
+  distance: Float!
+  postcodes: [String!]!
+  retailers: [String!]!
+  states: [String!]!
+}
+
+input UpdateNewsInput {
+  audience: TargetingAudienceInput
+  body: String
+
+  """ID"""
+  id: String!
+  images: [NewsImageInput!]
+  link: String
+  locations: [TargetingLocationInput!]
+  status: String
+  summary: String
+  title: String
+  type: String
+}

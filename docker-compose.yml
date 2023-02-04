@@ -1,0 +1,46 @@
+version: '3.7'
+services:
+  content_service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: content_service
+    command: sh "./service.sh"
+    environment:
+      - COUCH_DB_URL=http://admin:password@couchdb:5984
+      - MYSQL_DB_URL=mysql://admin:password@mysql:3306/shping_content_db
+      - SHPING_API_URL=https://dev-api.shping.com
+    volumes:
+      - .:/app
+    ports:
+      - "8044:8044"
+    depends_on:
+      - mysql
+    restart: always
+    expose:
+      - "8038:8038"
+  couchdb:
+    image: couchdb
+    restart: always
+    ports:
+      - '5984'
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=password
+    volumes:
+      - ./dbdata-couchdb:/opt/couchdb/data
+  mysql:
+    image: mariadb:10.2
+    ports:
+      - '3306'
+    environment:
+      - MYSQL_ROOT_USER=root
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=shping_content_db
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=password
+    volumes:
+      - ./dbdata-mysql:/var/lib/mysql
+
+volumes:
+  shping-mysql-data:
