@@ -1,4 +1,4 @@
-# Shping Content Service
+# Service for fetching news from couchDB 
 
 ### Local Development and Tests
 
